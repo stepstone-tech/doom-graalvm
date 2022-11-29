@@ -7,18 +7,26 @@ So, we took [Doom port compiled to WebAssembly](https://github.com/diekmann/wasm
 
 # GraalVM version
 
-This program was written on GraalVM 17+ v22.3. You must install wasm support by running `gu install wasm`.
+This program was written on GraalVM 11+ v22.3.
+The easiest is to install GraalVM via a tool like [SDKMan!](https://sdkman.io/):
+
+```bash
+sdk install java 22.3.0.r11-grl
+```
+
+You must install wasm support by running `gu install wasm`.
 
 # Running
 
-> :warning: **To run correctly, you must increase stack size with `-Xss4m`**
+From the command line run with:
+```bash
+./gradlew run
+```
 
 From IDE - just run `com.stepstone.jc.demo.Doom` class
 
-From the command line - compile with `mvn package` and then run with:
-```bash
-java -Xss4m -jar doom-wasm-1.0-SNAPSHOT-jar-with-dependencies.jar
-```
+> :warning: **To run correctly, you must increase stack size with `-Xss4m`**
+
 
 After this, you should see a Java Swing window **and you can start killing monsters :godmode:**
 
@@ -45,10 +53,16 @@ What we need to do:
 
 It is also possible to compile GraalVM-WASM-based Doom into the native image.
 
-First, you need to run `mvn package` and then run `native-image`:
+The following command will compile the native binary and execute it:
 
 ```bash
-native-image --language:wasm --initialize-at-build-time=sun.awt.Toolkit -Djava.awt.headless=false -H:ConfigurationFileDirectories=native-config -H:DynamicProxyConfigurationFiles=native-config\dynamic-proxy.json --no-fallback  -jar target\doom-wasm-1.0-SNAPSHOT-jar-with-dependencies.jar  
+./gradlew nativeRun
+```
+
+After this, the binary can also be executed from command line directly:
+
+```bash
+./build/native/nativeCompile/doom-wasm
 ```
 
 This way you will have Doom compiled to LLVM, compiled to WASM, wrapped in the Java Swing app, and compiled to native code. Simple, right? ¯\_(ツ)_/¯

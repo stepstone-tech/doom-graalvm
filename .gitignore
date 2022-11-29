@@ -507,3 +507,10 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# Gradle
+.gradle
+build
+
+# IntelliJ
+.idea
+

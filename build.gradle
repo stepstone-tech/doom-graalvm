@@ -1,0 +1,43 @@
+plugins {
+    id 'application'
+    id 'org.graalvm.buildtools.native' version '0.9.18'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly libs.graalvm.sdk
+}
+
+group = 'com.stepstone.jc'
+version = '1.0-SNAPSHOT'
+
+def graalvm = {
+    languageVersion = JavaLanguageVersion.of(11)
+    vendor = JvmVendorSpec.matching("GraalVM")
+}
+
+java {
+    toolchain(graalvm)
+}
+
+application {
+    mainClass = 'com.stepstone.jc.demo.Doom'
+    applicationDefaultJvmArgs = ['-Xss4m']
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+graalvmNative.binaries.all {
+    javaLauncher = javaToolchains.launcherFor(graalvm)
+    buildArgs.addAll([
+            "--language:wasm",
+            "--initialize-at-build-time=sun.awt.Toolkit",
+            "-H:DynamicProxyConfigurationFiles=../../../src/main/resources/META-INF/native-image/doom/dynamic-proxy.json",
+    ])
+    systemProperty("java.awt.headless", "false")
+}

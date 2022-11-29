@@ -1,0 +1,7 @@
+[versions]
+graalvm = "22.3.0"
+
+[libraries]
+graalvm-sdk = { module = "org.graalvm.sdk:graal-sdk", version.ref = "graalvm" }
+
+
