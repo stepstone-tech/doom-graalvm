@@ -51,4 +51,4 @@ First, you need to run `mvn package` and then run `native-image`:
 native-image --language:wasm --initialize-at-build-time=sun.awt.Toolkit -Djava.awt.headless=false -H:ConfigurationFileDirectories=native-config -H:DynamicProxyConfigurationFiles=native-config\dynamic-proxy.json --no-fallback  -jar target\doom-wasm-1.0-SNAPSHOT-jar-with-dependencies.jar  
 ```
 
-This way you will have Doom compiled to LLVM, compiled to WASM, wrapped in the Java Swing app, and compiled to native code. Simple, right? ¯\_(ツ)_/¯
+This way you will have Doom compiled to LLVM, compiled to WASM, wrapped in the Java Swing app, and compiled to native code. Simple, right? ¯\\_(ツ)_/¯
